@@ -2,7 +2,7 @@
                     <div class="page-container">
                         <div class="row">
                             <div class="col-md-6 text-center text-md-start">
-                                <script>document.write(new Date().getFullYear())</script> © Arclon - By <span class="fw-bold text-decoration-underline text-uppercase text-reset fs-12">Coderthemes</span>
+                                <script>document.write(new Date().getFullYear())</script> © Chatforge - By <span class="fw-bold text-decoration-underline text-uppercase text-reset fs-12">Nauman</span>
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-end footer-links d-none d-md-block">

@@ -12,10 +12,10 @@
         <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.ico')}}">
 
         <!-- Theme Config Js -->
-        <script src="{{asset('baceknd/assets/js/config.js')}}"></script>
+        <script src="{{asset('backend/assets/js/config.js')}}"></script>
 
         <!-- Vendor css -->
-        <link href="{{asset('baceknd/assets/css/vendor.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('backend/assets/css/vendor.min.css')}}" rel="stylesheet" type="text/css" />
 
         <!-- App css -->
         <link href="{{asset('backend/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
