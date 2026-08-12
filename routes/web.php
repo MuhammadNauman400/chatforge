@@ -11,20 +11,20 @@ Route::get('/', function () {
 });
 
 /////// User Accessable Routes
-Route::middleware(['auth', IsUser::class])->group(function(){
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', IsUser::class])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 
 
 /////// Admin Accessable Routes
-Route::middleware(['auth', IsAdmin::class])->group(function(){
+Route::middleware(['auth', IsAdmin::class])->group(function () {
 
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
-
+    Route::get('/admin/profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
 });
 
 Route::middleware('auth')->group(function () {
@@ -33,4 +33,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

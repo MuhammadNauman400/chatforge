@@ -38,7 +38,7 @@
 
                 <div class="card overflow-hidden text-center p-xxl-4 p-3 mb-0">
 
-                    <h4 class="fw-semibold mb-3 fs-18">Log in to your account</h4>
+                    <h4 class="fw-semibold mb-3 fs-18">Register your account</h4>
 
                     <form method="POST" action="{{ route('register') }}" class="text-start mb-3">
                         @csrf
