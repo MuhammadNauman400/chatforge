@@ -40,7 +40,7 @@
                                             <td><span class="text-muted">{{$item->price}}</span></td>
                                             <td class="pe-3">
                                                 <div class="hstack gap-1 justify-content-end">
-                                                    <a href="javascript:void(0);" class="btn btn-soft-success btn-icon btn-sm rounded-circle"> <i class="ti ti-edit fs-16"></i></a>
+                                                    <a href="{{route('edit.plans', $item->id)}}" class="btn btn-soft-success btn-icon btn-sm rounded-circle"> <i class="ti ti-edit fs-16"></i></a>
                                                     <a href="javascript:void(0);" class="btn btn-soft-danger btn-icon btn-sm rounded-circle"> <i class="ti ti-trash"></i></a>
                                                 </div>
                                             </td>
