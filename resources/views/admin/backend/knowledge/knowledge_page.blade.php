@@ -61,12 +61,7 @@
                             </tr>
                         </thead>
                         <tbody id="documentsTableBody">
-                            <td>file name</td>
-                            <td><span class="badge bg-danger">processed</span></td>
-                            <td>13/8/26</td>
-                            <td>
-                                <button class="btn btn-sm btn-danger delete-document-btn">Delete</button>
-                            </td>
+                            {{-- load all data --}}
                         </tbody>
                     </table>
                 </div>
@@ -88,16 +83,83 @@
 
                 if (!token) {
                     console.error('CSRF Token not found');
-                    return null;         
+                    return null;
                 }
                 return token;
             }
 
+            //// fetch documents method
             async function fetchDocuments() {
-                
-            }
+                documentsLoadingSpinner.classList.add('active')
+                documentsTableBody.innerHTML = '';
+
+                try {
+                    const response = await fetch('/knowledge-documents', {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('HTTP ERRORS');
+                    }
+
+                    const documents = await response.json();
+
+                    documents.forEach(doc => {
+                        const row = documentsTableBody.insertRow();
+                        row.innerHTML = `<td>${doc.file_name}</td>
+                            <td><span class="badge ${doc.status === 'processed' ? 'bg-success' : doc.status === 'pending' : 'bg-warning text-dark' : 'bg-danger'} ">${doc.status}</span></td>
+                            <td>${new Date(doc.created_at).toLocaleDateString()}</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger delete-document-btn" data-id="${doc.id}" ${doc.status === 'processing' ? 'disabled' : ''}>Delete</button>
+                            </td>`;
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching documents', error);
+                    documentsTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Failed to load documents</td> </tr>`
+                    
+                } finally {
+                    documentsLoadingSpinner.classList.remove('active')
+                }
+
+            }   
+            //End method
+
+            //Submit Form Data method
+            uploadDocumentForm.addEventListener('submit', async function(e) {
+                event.preventDefault();
+                uploadMessage.innerHTML = '';
+                const formData = new FormData(this);
+                const csrfToken = getCsrfToken();
+
+                if (!csrfToken) {
+                    uploadMessage.innerHTML = `<div class="alert alert-danger">CSRF token not found. Please refresh the page</div>`;
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/knowledge-documents', {
+                        method: 'POST',
+                        body: formData,
+                        header: {
+                            'X-CSRF-TOKEN' : csrfToken,
+                            'Accept' : 'application/json',
+                            'X-Requested-With' : 'XMLHttpRequest'
+                        }
+                    })
+
+                    const data = await response.json();
+                    
+                } catch (error) {
+                    
+                }
+            });
+            //End method
+
 
         })
     </script>
-    
 @endsection
