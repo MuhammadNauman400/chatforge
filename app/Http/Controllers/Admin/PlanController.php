@@ -61,4 +61,16 @@ class PlanController extends Controller
 
         return redirect()->route('all.plans')->with($notification);
     }
+
+    public function DeletePlans($id) {
+        Plan::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Plan Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+
+    }
 }

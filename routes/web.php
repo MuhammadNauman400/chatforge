@@ -38,6 +38,7 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
         Route::post('/store/plans', 'StorePlans')->name('store.plans');
         Route::get('/edit/plans/{id}', 'EditPlans')->name('edit.plans');
         Route::post('/update/plans', 'UpdatePlans')->name('update.plans');
+        Route::get('/delete/plans{id}', 'DeletePlans')->name('delete.plans');
     });
 });
 /////// End Admin Routes
