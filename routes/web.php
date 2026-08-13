@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\KnowledgeDocumentController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\IsAdmin;
@@ -40,8 +41,15 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
         Route::post('/update/plans', 'UpdatePlans')->name('update.plans');
         Route::get('/delete/plans{id}', 'DeletePlans')->name('delete.plans');
     });
+
+
 });
 /////// End Admin Routes
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/knowledge/page', [KnowledgeDocumentController::class, 'KnowledgePage'])->name('knowledge.page');
+});
 
 
 Route::middleware('auth')->group(function () {
