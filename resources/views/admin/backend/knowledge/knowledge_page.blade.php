@@ -119,7 +119,7 @@
 
                 } catch (error) {
                     console.error('Error fetching documents', error);
-                    documentsTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Failed to load documents</td> </tr>`
+                    documentsTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Failed to load documents</td> </tr>`;
                     
                 } finally {
                     documentsLoadingSpinner.classList.remove('active')
@@ -152,9 +152,24 @@
                     })
 
                     const data = await response.json();
-                    
+
+                    if (response.ok) {
+                        uploadMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                        this.reset();
+                        fetchDocuments();
+                    } else {
+                        let errorMessage = 'An error occurred';
+                        if (data.message) {
+                            errorMessage = data.message
+                        } else if (data.errors) {
+                            errorMessage = Object.values(data.errors).flat().join('<br>');
+                        }
+                        uploadMessage.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
+                    }
+
                 } catch (error) {
-                    
+                    console.error('Error uploading documents', error);
+                    uploadMessage.innerHTML = `<div class="alert alert-danger">Failed to upload document. Please try again </div>`;
                 }
             });
             //End method
