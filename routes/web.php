@@ -34,6 +34,8 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     //// Plan Routes  -- group controller
     Route::controller(PlanController::class)->group(function () {
         Route::get('/all/plans', 'AllPlans')->name('all.plans');
+        Route::get('/add/plans', 'AddPlans')->name('add.plans');
+        Route::post('/store/plans', 'StorePlans')->name('store.plans');
     });
 });
 /////// End Admin Routes
