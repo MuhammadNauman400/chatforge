@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\KnowledgeDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class KnowledgeDocumentController extends Controller
@@ -63,5 +64,31 @@ class KnowledgeDocumentController extends Controller
             'message' => 'Document uploaded successfully and pending processing',
             'document' => $document
         ], 201);
+    }
+
+    public function DocDelete(KnowledgeDocument $document)
+    {
+        $user = Auth::user();
+
+        if (!$user->company_id || $document->company_id !== $user->company_id) {
+            return response()->json([
+                'message' => 'Unauthorized or no company associated with this user'
+            ], 403);
+        }
+
+        try {
+            if (Storage::disk('public')->exists($document->file_path)) {
+                Storage::disk('public')->delete($document->file_path);
+            }
+
+            $document->delete();
+            return response()->json([
+                'message' => 'Document deleted successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to delete a document. Please try again'
+            ], 500);
+        }
     }
 }
