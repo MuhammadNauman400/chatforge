@@ -117,15 +117,25 @@
                             </td>`;
                     });
 
+                    ////For delete data
+                    document.querySelectorAll('.delete-document-btn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const documentId = this.getAttribute('data-id');
+                            deleteDocument(documentId);
+                        });
+                    });
+                    ///End For delete data
+
                 } catch (error) {
                     console.error('Error fetching documents', error);
-                    documentsTableBody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Failed to load documents</td> </tr>`;
-                    
+                    documentsTableBody.innerHTML =
+                        `<tr><td colspan="4" class="text-center text-danger">Failed to load documents</td> </tr>`;
+
                 } finally {
                     documentsLoadingSpinner.classList.remove('active')
                 }
 
-            }   
+            }
             //End method
 
             //Submit Form Data method
@@ -136,7 +146,8 @@
                 const csrfToken = getCsrfToken();
 
                 if (!csrfToken) {
-                    uploadMessage.innerHTML = `<div class="alert alert-danger">CSRF token not found. Please refresh the page</div>`;
+                    uploadMessage.innerHTML =
+                        `<div class="alert alert-danger">CSRF token not found. Please refresh the page</div>`;
                     return;
                 }
 
@@ -145,16 +156,17 @@
                         method: 'POST',
                         body: formData,
                         headers: {
-                            'X-CSRF-TOKEN' : csrfToken,
-                            'Accept' : 'application/json',
-                            'X-Requested-With' : 'XMLHttpRequest'
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
                         }
                     })
 
                     const data = await response.json();
 
                     if (response.ok) {
-                        uploadMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                        uploadMessage.innerHTML =
+                            `<div class="alert alert-success">${data.message}</div>`;
                         this.reset();
                         fetchDocuments();
                     } else {
@@ -164,20 +176,61 @@
                         } else if (data.errors) {
                             errorMessage = Object.values(data.errors).flat().join('<br>');
                         }
-                        uploadMessage.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
+                        uploadMessage.innerHTML =
+                            `<div class="alert alert-danger">${errorMessage}</div>`;
                     }
 
                 } catch (error) {
                     console.error('Error uploading documents', error);
-                    uploadMessage.innerHTML = `<div class="alert alert-danger">Failed to upload document. Please try again </div>`;
+                    uploadMessage.innerHTML =
+                        `<div class="alert alert-danger">Failed to upload document. Please try again </div>`;
                 }
             });
-            //End method
+
+
+            ///Delete method
+            async function deleteDocument(documentId) {
+                if (!confirm('Are you sure you want to delete this document ?')) return;
+
+                const csrfToken = getCsrfToken();
+
+                if (!csrfToken) {
+                    uploadMessage.innerHTML =
+                        `<div class="alert alert-danger">CSRF token not found. Please refresh the page</div>`;
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/knowledge-documents/${documentId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        deleteMessage.innerHTML =
+                            `<div class="alert alert-success">${data.message}</div>`;
+                        fetchDocuments();
+                    } else {
+                        console.error('Delete Failed', response.status, data);
+                        deleteMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`
+                    }
+
+                } catch (error) {
+                    console.error('Error deleting documents', error);
+                    deleteMessage.innerHTML =
+                        `<div class="alert alert-danger">Failed to delete document. ${error.message} Please try again </div>`;
+                }
+            }
 
             //Initial load
             fetchDocuments();
 
         });
-
     </script>
 @endsection
