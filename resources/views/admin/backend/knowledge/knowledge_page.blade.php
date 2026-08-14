@@ -50,7 +50,7 @@
                         </div>
                         <p class="mt-2 text-muted">Loading Documents</p>
                     </div>
-                    <div class="deleteMessage" class="mt-3"></div>
+                    <div id="deleteMessage" class="mt-3"></div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -110,7 +110,7 @@
                     documents.forEach(doc => {
                         const row = documentsTableBody.insertRow();
                         row.innerHTML = `<td>${doc.file_name}</td>
-                            <td><span class="badge ${doc.status === 'processed' ? 'bg-success' : doc.status === 'pending' : 'bg-warning text-dark' : 'bg-danger'} ">${doc.status}</span></td>
+                            <td><span class="badge ${doc.status === 'processed' ? 'bg-success' : doc.status === 'pending' ? 'bg-warning text-dark' : 'bg-danger'} ">${doc.status}</span></td>
                             <td>${new Date(doc.created_at).toLocaleDateString()}</td>
                             <td>
                                 <button class="btn btn-sm btn-danger delete-document-btn" data-id="${doc.id}" ${doc.status === 'processing' ? 'disabled' : ''}>Delete</button>
@@ -130,7 +130,7 @@
 
             //Submit Form Data method
             uploadDocumentForm.addEventListener('submit', async function(e) {
-                event.preventDefault();
+                e.preventDefault();
                 uploadMessage.innerHTML = '';
                 const formData = new FormData(this);
                 const csrfToken = getCsrfToken();
@@ -144,7 +144,7 @@
                     const response = await fetch('/knowledge-documents', {
                         method: 'POST',
                         body: formData,
-                        header: {
+                        headers: {
                             'X-CSRF-TOKEN' : csrfToken,
                             'Accept' : 'application/json',
                             'X-Requested-With' : 'XMLHttpRequest'
