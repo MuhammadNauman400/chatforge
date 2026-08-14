@@ -174,7 +174,10 @@
             });
             //End method
 
+            //Initial load
+            fetchDocuments();
 
-        })
+        });
+
     </script>
 @endsection
