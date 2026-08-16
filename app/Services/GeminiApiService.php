@@ -21,7 +21,7 @@ class GeminiApiService
     public function __construct()
     {
         $this->apiKey = config('services.gemini.api_key');
-        $this->embeddingModel = 'embedding-001';
+        $this->embeddingModel = 'gemini-embedding-2';
         $this->generationModel = 'gemini-3.6-flash';
 
         if (empty($this->apiKey)) {
@@ -29,7 +29,7 @@ class GeminiApiService
         }
 
         $this->httpClient = new Client([
-            'base_url' => 'https://generativelanguage.googleapis.com/v1beta/',
+            'base_uri' => 'https://generativelanguage.googleapis.com/v1beta/',
             'headers' => ['Content-Type' => 'application/json'],
             'timeout' => 30,
             'connect_timeout' => 10,
@@ -45,7 +45,7 @@ class GeminiApiService
         }
 
         $endpoint = "models/{$this->embeddingModel}:embedContent";
-        $finalUrl = $this->httpClient->getConfig('base_url') . $endpoint . "?key={$this->apiKey}";
+        $finalUrl = $this->httpClient->getConfig('base_uri') . $endpoint . "?key={$this->apiKey}";
 
         Log::debug('About to call gemini', ['url' => $finalUrl]);
 
@@ -67,7 +67,7 @@ class GeminiApiService
             }
 
             return null;
-        } catch (\RequestException $e) {
+        } catch (RequestException $e) {
             Log::error('Gemini embedding api request fails:' . $e->getMessage(), [
                 'status_code' => $e->hasResponse() ? $e->getResponse()->getStatusCode() : 'N/A',
             ]);
@@ -106,7 +106,7 @@ class GeminiApiService
             }
 
             return 'I could not generate a response';
-        } catch (\RequestException $e) {
+        } catch (RequestException $e) {
             Log::error('Gemini Text Generation api request fails:' . $e->getMessage(), [
                 'status_code' => $e->hasResponse() ? $e->getResponse()->getStatusCode() : 'N/A',
             ]);

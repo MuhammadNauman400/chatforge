@@ -53,7 +53,7 @@ class ProcessKnowledgeDocument implements ShouldQueue
 
                 if ($embedding) {
                     KnowledgeChunk::create([
-                        'knowledge_document_id' => $this->document->id,
+                        'Knowledge_document_id' => $this->document->id,
                         'company_id' => $this->document->company_id,
                         'content' => $chunkContent,
                         'embedding' => json_encode($embedding), //Convert array to JSON string
