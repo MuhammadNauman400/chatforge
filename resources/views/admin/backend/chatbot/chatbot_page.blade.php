@@ -65,7 +65,7 @@
                         </div>
                         <p class="mt-2 text-muted">Loading Chatbots...</p>
                     </div>
-                    
+
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -81,7 +81,8 @@
                                 <td><span class="badge bg-success">active</span></td>
                                 <td>knowledge information</td>
                                 <td>
-                                    <button class="btn btn-sm btn-info text-white me-2">Embed Code</button>
+                                    <button class="btn btn-sm btn-info text-white me-2" data-bs-toggle="modal"
+                                        data-bs-target="#embedCodeModal" data-chatbot-id="">Embed Code</button>
 
                                     <button class="btn btn-sm btn-danger delete-chatbot-btn">Delete</button>
                                 </td>
@@ -93,4 +94,33 @@
 
         </section>
     </div>
+
+    <!-- Embed Code Modal -->
+    <div class="modal fade" id="embedCodeModal" tabindex="-1" aria-labelledby="embedCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="embedCodeModalLabel">Embed Chatbot Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Copy the following code and paste it into your website's HTML, just before the closing
+                        <code>&lt;/body&gt;</code> tag. Replace <code>[YOUR_CHATBOT_ID_HERE]</code> with your actual chatbot
+                        ID.
+                    </p>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <pre><code id="chatbotEmbedCode" class="language-html">&lt;div id="my-chatbot-widget" data-chatbot-id="[YOUR_CHATBOT_ID_HERE]"&gt;&lt;/div&gt;
+&lt;script src="http://127.0.0.1:8000/js/chatbot-widget.js"&gt;&lt;/script&gt;</code></pre>
+                    </div>
+                    <button class="btn btn-outline-primary" onclick="copyEmbedCode()">Copy Code</button>
+                    <div id="copyMessage" class="mt-2 text-success" style="display:none;">Copied!</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Embed Code Modal -->
+    
 @endsection
