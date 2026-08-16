@@ -75,7 +75,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="documentsTableBody">
+                        <tbody id="chatbotsTableBody">
                             <tr>
                                 <td>name</td>
                                 <td><span class="badge bg-success">active</span></td>
@@ -122,5 +122,78 @@
         </div>
     </div>
     <!--End Embed Code Modal -->
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            try {
+                $('#knowledgeDocumentIds').select2({
+                    placeholder: 'Select Knowledge documents',
+                    allowClear: true
+                });
+            } catch (error) {
+                console.error('Error initializing Select2', error)
+            }
+
+
+            const sections = document.querySelectorAll('.section-content');
+            const createChatbotForm = document.getElementById('createChatbotForm');
+            const chatbotsTableBody = document.getElementById('chatbotsTableBody');
+
+            const chatbotsLoadingSpinner = document.getElementById('chatbotsLoadingSpinner');
+            const createChatbotMessage = document.getElementById('createChatbotMessage');
+
+            function getCsrfToken() {
+                const token = document.querySelector('meta[name="csrf-token"]')?.content;
+                if (!token) {
+                    console.error('CSRF Totken not found');
+                    return null;
+                }
+                return token;
+            }
+
+            //Populate Knowledge document
+            async function populateKnowledgeDocuments() {
+                const select = document.getElementById('knowledgeDocumentIds');
+                if (!select) {
+                    console.error('Knowlede docuemnt select element not found');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/knowledge-documents', {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('HTTP ERRORS');
+                    }
+
+                    const documents = await response.json();
+                    // console.log('Knowledge document:' , documents);
+                    select.innerHTML = documents.length ?
+                        documents.map(doc => `<option value="${doc.id}">${doc.file_name} </option>`).join('') :
+                        `<option value="">No document available</option>`;
+
+                } catch (error) {
+                    console.error('Error fetching knowledge document', error);
+                }
+
+            }
+            /// End Method populateKnowledgeDocuments
+
+
+
+
+
+            // Initial Load
+            populateKnowledgeDocuments();
+
+
+
+        })
+    </script>
 @endsection
