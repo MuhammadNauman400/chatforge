@@ -239,10 +239,61 @@
             }
             /// End fetchChatbots Method 
 
+            //Submit data
+            createChatbotForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                createChatbotMessage.innerHTML = '';
 
+                const formData = new FormData(this);
+                const csrfToken = getCsrfToken();
+
+                if (!csrfToken) {
+                    createChatbotMessage.innerHTML =
+                        `<div class="alert alert-danger">CSRF token not found. Please refresh the page</div>`;
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/chatbots', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        createChatbotMessage.innerHTML =
+                            `<div class="alert alert-success">${data.message}</div>`;
+                        this.reset();
+                        fetchChatbots();
+                    } else {
+                        let errorMessage = 'An error occurred';
+                        if (data.message) {
+                            errorMessage = data.message;
+                        } else if (data.errors) {
+                            errorMessage = Object.values(data.errors).flat().join('<br>');
+                        }
+                        createChatbotMessage.innerHTML =
+                            `<div class="alert alert-danger">${errorMessage}</div>`;
+                    }
+
+                } catch (error) {
+                    console.error('Error creating Chatbots', error);
+                    createChatbotMessage.innerHTML =
+                        `<div class="alert alert-danger">Failed to upload document. Plz try again </div>`;
+                }
+
+            });
+            /// End submit Method 
 
             // Initial Load
             populateKnowledgeDocuments();
+            fetchChatbots();
 
 
 
