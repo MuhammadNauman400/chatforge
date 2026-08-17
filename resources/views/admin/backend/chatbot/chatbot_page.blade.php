@@ -207,7 +207,7 @@
                             row.innerHTML = ` 
          <td>${bot.name}</td>
         <td> <span class="badge ${bot.status === 'active' ? 'bg-success' : 'bg-warning text-dark'}">${bot.status}</span> </td>
-        <td>knowledge information</td>
+        <td>${bot.knowledge_base_name ? bot.knowledge_base_name.join(', ') : 'N/A' }</td>
         <td>
             <button class="btn btn-sm btn-info text-white me-2" data-bs-toggle="modal" data-bs-target="#embedCodeModal" data-chatbot-id="${bot.id}" >Embed Code</button>
 
