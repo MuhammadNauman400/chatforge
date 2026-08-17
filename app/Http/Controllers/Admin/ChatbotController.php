@@ -43,7 +43,7 @@ class ChatbotController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'persona' => 'nullable|string',
+            'perosona' => 'nullable|string',
             'knowledge_document_ids' => 'nullable|array',
         ]);
 
@@ -57,7 +57,7 @@ class ChatbotController extends Controller
         $chatbot = Chatbot::create([
             'company_id' => $companyId,
             'name' => $request->name,
-            'persona' => $request->persona,
+            'perosona' => $request->perosona,
             'status' => 'active',
         ]);
 

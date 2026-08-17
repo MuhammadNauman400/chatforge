@@ -38,7 +38,7 @@
 
                         <div class="mb-3">
                             <label for="chatbotPersona" class="form-label">Initial Greeting / Persona</label>
-                            <textarea class="form-control" name="persona" id="chatbotPersona" rows="3"
+                            <textarea class="form-control" name="perosona" id="chatbotPersona" rows="3"
                                 placeholder="e.g, 'Hello! how can i assist you with your website ?'" required></textarea>
                         </div>
 
