@@ -223,7 +223,7 @@
                     document.querySelectorAll('.delete-chatbot-btn').forEach(button => {
                         button.addEventListener('click', function() {
                             const chatbotId = this.getAttribute('data-id');
-                            deleteDocument(chatbotId);
+                            deleteChatbot(chatbotId);
                         });
                     });
                     /// end For delete data 
@@ -286,15 +286,16 @@
                 } catch (error) {
                     console.error('Error creating Chatbots', error);
                     createChatbotMessage.innerHTML =
-                        `<div class="alert alert-danger">Failed to upload document. Plz try again </div>`;
+                        `<div class="alert alert-danger">Failed to upload chatbot. Plz try again </div>`;
                 }
 
             });
             /// End submit Method 
 
+            /// Delete chatbot
             async function deleteChatbot(chatbotId) {
 
-                if (!confirm('Are you sure you want to delete this document?')) return;
+                if (!confirm('Are you sure you want to delete this chatbot?')) return;
 
                 const csrfToken = getCsrfToken();
 
@@ -326,9 +327,9 @@
                         createChatbotMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`
                     }
                 } catch (error) {
-                    console.error('Error deleting documents', error);
+                    console.error('Error deleting chatbot', error);
                     createChatbotMessage.innerHTML =
-                        `<div class="alert alert-danger">Failed to delete document. ${error.message} Plz try again </div>`;
+                        `<div class="alert alert-danger">Failed to delete chatbot. ${error.message} Plz try again </div>`;
                 }
             }
             /// End Delete Method  
