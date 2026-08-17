@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/chatbots', [ChatbotController::class, 'Index']);
     Route::post('/chatbots', [ChatbotController::class, 'Store']);
+    Route::delete('/chatbots/{chatbot}', [ChatbotController::class, 'DeleteChatbot']); 
 
 
     Route::get('/chatbot/page', [ChatbotController::class, 'ChatbotPage'])->name('chatbot.page');

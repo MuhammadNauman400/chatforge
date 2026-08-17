@@ -223,7 +223,7 @@
                     document.querySelectorAll('.delete-chatbot-btn').forEach(button => {
                         button.addEventListener('click', function() {
                             const chatbotId = this.getAttribute('data-id');
-                            // deleteDocument(documentId);
+                            deleteDocument(chatbotId);
                         });
                     });
                     /// end For delete data 
@@ -291,6 +291,47 @@
 
             });
             /// End submit Method 
+
+            async function deleteChatbot(chatbotId) {
+
+                if (!confirm('Are you sure you want to delete this document?')) return;
+
+                const csrfToken = getCsrfToken();
+
+                if (!csrfToken) {
+                    uploadMessage.innerHTML =
+                        `<div class="alert alert-danger">CSRF token not found. Please refresh the page</div>`;
+                    return;
+                }
+
+
+                try {
+                    const response = await fetch(`/chatbots/${chatbotId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        createChatbotMessage.innerHTML =
+                            `<div class="alert alert-success">${data.message}</div>`;
+                        fetchChatbots();
+                    } else {
+                        console.error('Delete Failed', response.status, data);
+                        createChatbotMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`
+                    }
+                } catch (error) {
+                    console.error('Error deleting documents', error);
+                    createChatbotMessage.innerHTML =
+                        `<div class="alert alert-danger">Failed to delete document. ${error.message} Plz try again </div>`;
+                }
+            }
+            /// End Delete Method  
 
             // Initial Load
             populateKnowledgeDocuments();

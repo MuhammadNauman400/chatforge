@@ -72,5 +72,8 @@ class ChatbotController extends Controller
     }
     // End Method 
 
+    public function DeleteChatbot(Chatbot $chatbot) {}
+    // End Method 
+
 
 }
