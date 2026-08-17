@@ -77,15 +77,7 @@
                         </thead>
                         <tbody id="chatbotsTableBody">
                             <tr>
-                                <td>name</td>
-                                <td><span class="badge bg-success">active</span></td>
-                                <td>knowledge information</td>
-                                <td>
-                                    <button class="btn btn-sm btn-info text-white me-2" data-bs-toggle="modal"
-                                        data-bs-target="#embedCodeModal" data-chatbot-id="">Embed Code</button>
 
-                                    <button class="btn btn-sm btn-danger delete-chatbot-btn">Delete</button>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -186,6 +178,66 @@
             /// End Method populateKnowledgeDocuments
 
 
+            // Fetch Chatbot Data 
+            async function fetchChatbots() {
+                chatbotsLoadingSpinner.classList.add('active')
+                chatbotsTableBody.innerHTML = '';
+
+                try {
+                    const response = await fetch('/chatbots', {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('HTTP ERRORS');
+                    }
+
+                    const chatbots = await response.json();
+
+                    if (chatbots.length === 0) {
+                        chatbotsTableBody.innerHTML =
+                            `<tr><td colspan="4" class="text-center text-muted">No Chatbots created yet</td></tr>`
+                    } else {
+
+                        chatbots.forEach(bot => {
+                            const row = chatbotsTableBody.insertRow();
+                            row.innerHTML = ` 
+         <td>${bot.name}</td>
+        <td> <span class="badge ${bot.status === 'active' ? 'bg-success' : 'bg-warning text-dark'}">${bot.status}</span> </td>
+        <td>knowledge information</td>
+        <td>
+            <button class="btn btn-sm btn-info text-white me-2" data-bs-toggle="modal" data-bs-target="#embedCodeModal" data-chatbot-id="${bot.id}" >Embed Code</button>
+
+ <button class="btn btn-sm btn-danger delete-chatbot-btn" data-id="${bot.id}">Delete</button>
+        </td> 
+                `;
+                        });
+
+                    }
+
+
+                    /// For delete data 
+                    document.querySelectorAll('.delete-chatbot-btn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const chatbotId = this.getAttribute('data-id');
+                            // deleteDocument(documentId);
+                        });
+                    });
+                    /// end For delete data 
+
+                } catch (error) {
+                    console.error('Error featching chatbots', error);
+                    chatbotsTableBody.innerHTML =
+                        `<tr><td colspan="4" class="text-center text-danger">Failed to load Chatbot</td> </tr>`
+                } finally {
+                    chatbotsLoadingSpinner.classList.remove('active')
+                }
+
+            }
+            /// End fetchChatbots Method 
 
 
 
