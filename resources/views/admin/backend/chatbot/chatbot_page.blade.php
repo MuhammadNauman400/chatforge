@@ -270,6 +270,7 @@
                         createChatbotMessage.innerHTML =
                             `<div class="alert alert-success">${data.message}</div>`;
                         this.reset();
+                        $('#knowledgeDocumentIds').val(null).trigger('change');
                         fetchChatbots();
                     } else {
                         let errorMessage = 'An error occurred';
