@@ -16,7 +16,7 @@ Route::get('/', function () {
 /////// User Accessable Routes
 Route::middleware(['auth', IsUser::class])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('client.index');
     })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
