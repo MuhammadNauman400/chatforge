@@ -88,7 +88,7 @@ class ChatbotController extends Controller
             return response()->json(['message' => 'Failed to delete chatbot'], 500);
         }
     }
-    // End Method 
+    // End Method
 
 
 }

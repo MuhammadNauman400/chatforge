@@ -332,7 +332,63 @@
                         `<div class="alert alert-danger">Failed to delete chatbot. ${error.message} Plz try again </div>`;
                 }
             }
-            /// End Delete Method  
+            /// End Delete Method
+
+
+            /// Embed code Modal Login  
+
+            const embedCodeModal = document.getElementById('embedCodeModal');
+            embedCodeModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const chatbotId = button.getAttribute('data-chatbot-id');
+                const embedCodeElement = document.getElementById('chatbotEmbedCode');
+
+                embedCodeElement.innerHTML = `&lt;div id="my-chatbot-widget" data-chatbot-id="${chatbotId}"&gt;&lt;/div&gt;
+&lt;script src="http://127.0.0.1:8000/js/chatbot-widget.js"&gt;&lt;/script&gt;`;
+
+                document.getElementById('copyMessage').style.display = 'none';
+            });
+
+            window.copyEmbedCode = function() {
+                const embedCodeElement = document.getElementById('chatbotEmbedCode');
+                const textToCopy = embedCodeElement.textContent;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const copyMessage = document.getElementById('copyMessage');
+                        copyMessage.style.display = 'block';
+                        setTimeout(() => copyMessage.style.display = 'none', 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                        fallbackCopyTextToClipboard(textToCopy);
+                    });
+                } else {
+                    fallbackCopyTextToClipboard(textToCopy);
+                }
+
+            }
+
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.opacity = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    const copyMessage = document.getElementById('copyMessage');
+                    copyMessage.style.display = 'block';
+                    setTimeout(() => copyMessage.style.display = 'none', 2000);
+                } catch (error) {
+                    console.error('Fallback: oops unable to copy', error);
+                }
+                document.body.removeChild(textArea);
+            }
+
+
+            /// End Embed code Modal Login
 
             // Initial Load
             populateKnowledgeDocuments();
