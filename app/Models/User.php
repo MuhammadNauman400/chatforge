@@ -34,6 +34,10 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class);
     }
 
+    public function plan() {
+        return $this->belongsTo(Plan::class, 'plan_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *
