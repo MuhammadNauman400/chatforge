@@ -98,7 +98,7 @@
                         </div>
 
                         <!-- item-->
-                        <a href="{{ route('admin.profile') }}" class="dropdown-item">
+                        <a href="{{ route('user.profile') }}" class="dropdown-item">
                             <i class="ri-account-circle-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">My Account</span>
                         </a>

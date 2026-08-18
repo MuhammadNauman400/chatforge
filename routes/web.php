@@ -21,6 +21,8 @@ Route::middleware(['auth', IsUser::class])->group(function () {
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+    Route::get('/user/profile', [UserController::class, 'UserProfile'])->name('user.profile');
+    Route::post('/user/profile/store', [UserController::class, 'UserProfileStore'])->name('user.profile.store');
 });
 
 
