@@ -1,3 +1,34 @@
+@php
+use Illuminate\Support\Facades\Auth; 
+use App\Models\KnowledgeDocument;
+use App\Models\Chatbot;
+
+$user = Auth::user();
+$currentPlan = null;
+$usedKnowledgeBases = 0;
+$remainingKnowledgeBases = 0;
+$usedChatbots = 0;
+$remainingChatbots = 0;
+$companySlug = null;
+
+if ($user &&  $user->plan && $user->company ) {
+    $currentPlan = $user->plan;
+    $companyId = $user->company_id;
+    $companySlug = $user->company->slug; 
+
+    /// Get current usage counts for the user's company
+    $usedKnowledgeBases = KnowledgeDocument::where('company_id',$companyId)->count();
+    $usedChatbots = Chatbot::where('company_id',$companyId)->count();
+
+    /// Calculate remaining limits 
+    $remainingKnowledgeBases = $currentPlan->knowledge_base - $usedKnowledgeBases;
+
+    $remainingChatbots = $currentPlan->chat_bot - $usedChatbots;
+
+}
+    
+@endphp
+
 <div class="sidenav-menu">
 
                 <!-- Brand Logo -->
