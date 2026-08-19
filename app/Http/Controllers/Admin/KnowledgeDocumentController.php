@@ -52,6 +52,19 @@ class KnowledgeDocumentController extends Controller
             ], 403);
         }
 
+        /// Get the current number of knowledge document for the user
+        $currentDocumentsCount = KnowledgeDocument::where('company_id', $user->company_id)->count();
+
+        /// Get the limit for the user plan
+        $knowledgeBaseLimit = $user->plan->knowledge_base;
+
+        /// Check if the limit has been reached
+        if ($currentDocumentsCount >= $knowledgeBaseLimit) {
+            return response()->json([
+                'message' => 'You have reached your limit of knowledge base documents for your current plan. Please upgrade your plan for add more.'
+            ],403);
+        }
+
         $companyId = $user->company_id;
         $companySlug = $company->slug;
 
