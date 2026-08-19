@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/knowledge/page', [KnowledgeDocumentController::class, 'KnowledgePage'])->name('knowledge.page');
 
 
-    /// User Knowledge document routes
+    /// User Knowledge document route
     Route::get('user/knowledge/page', [KnowledgeDocumentController::class, 'UserKnowledgePage'])->name('user.knowledge.page');
 });
 
@@ -87,6 +87,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/chatbot/page', [ChatbotController::class, 'ChatbotPage'])->name('chatbot.page');
 
+    /// User chatbot page route
+    Route::get('user/chatbot/page', [ChatbotController::class, 'UserChatbotPage'])->name('user.chatbot.page');
 });
 
 

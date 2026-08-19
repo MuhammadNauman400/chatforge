@@ -14,6 +14,11 @@ class ChatbotController extends Controller
         return view('admin.backend.chatbot.chatbot_page');
     }
 
+    public function UserChatbotPage()
+    {
+        return view('client.backend.chatbot.chatbot_page');
+    }
+
     public function Index()
     {
 
@@ -52,6 +57,19 @@ class ChatbotController extends Controller
 
         if (!$companyId) {
             return response()->json(['message' => 'User is not associated with a company'], 403);
+        }
+
+        /// Get the current number of Chatbots for this user 
+        $currentChatbotsCount = Chatbot::where('company_id', $user->company_id)->count();
+
+        // get the limit for the user plan
+        $chatBotLimit = $user->plan->chat_bot;
+
+        // Check if the limit has been reached 
+        if ($currentChatbotsCount >= $chatBotLimit) {
+            return response()->json([
+                'message' => 'You have reached your limit of Chatbots for your current plan. Please upgrate your Plan for add more.'
+            ], 403);
         }
 
         $chatbot = Chatbot::create([
