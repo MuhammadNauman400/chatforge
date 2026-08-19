@@ -70,7 +70,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/knowledge-documents/{document}', [KnowledgeDocumentController::class, 'DocDelete']);
 
     Route::get('/knowledge/page', [KnowledgeDocumentController::class, 'KnowledgePage'])->name('knowledge.page');
+
+
+    /// User Knowledge document routes
+    Route::get('user/knowledge/page', [KnowledgeDocumentController::class, 'UserKnowledgePage'])->name('user.knowledge.page');
 });
+
 
 /// Chatbot Routes
 Route::middleware('auth')->group(function () {

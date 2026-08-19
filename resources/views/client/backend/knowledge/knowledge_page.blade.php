@@ -1,5 +1,5 @@
-@extends('admin.admin_dashboard')
-@section('admin')
+@extends('client.client_dashboard')
+@section('client')
 
     <head>
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,7 +18,7 @@
 
     <div class="page-container">
         <section id="knowledge-base" class="section-content">
-            <h2 class="mb-2">Admin Knowledge Base Management</h2>
+            <h2 class="mb-2">User Knowledge Base Management</h2>
             <p class="text-muted mb-4">Upload text documents to train your chatbot. Only .txt and .md files are supported for
                 now</p>
 

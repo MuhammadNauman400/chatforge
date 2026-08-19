@@ -77,7 +77,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{ route('knowledge.page') }}" class="side-nav-link">
+                <a href="{{ route('user.knowledge.page') }}" class="side-nav-link">
                     <span class="menu-icon"><i class="ti ti-calendar"></i></span>
                     <span class="menu-text"> Knowledge Base </span>
                 </a>
