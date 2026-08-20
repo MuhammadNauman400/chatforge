@@ -61,12 +61,39 @@ class ChatbotInteractionController extends Controller
                 ->sortByDesc('similarity') // Sort by similarity highest first
                 ->take(3); // take top 3 most relevant chunks
 
+            $context = '';
+            if ($relevantChunks->isNotEmpty()) {
+                $context = "Here is some relevant information from our knowledge base:\n";
+                foreach ($relevantChunks as $chunk) {
+                    $context .= "- " . $chunk->content . "\n";
+                }
+                $context .= "\nBased on the above information, answer the following questions:\n";
+            } else {
+                $context = "No relevant information found in the knowledge base. Answer the following question based on general knowledge, or state that you don't have enough information:\n";
+            }
 
+            // 4. Construct the prompt for gemini 
+            $prompt = "You are a helpful chatbot for a company. " .
+                "Your goal is to answer questions accurately and concisely, drawing primarily from the provided context. " .
+                "If the question cannot be answered from the context, state that you don't have enough information. " .
+                "Do not make up answers.\n\n" .
+                $context .
+                "Question: " . $userQuery;
 
+            if (!empty($chatbot->persona)) {
+                $prompt = "You are a helpful chatbot with the following persona: '{$chatbot->persona}'. " . $prompt;
+            }
 
+            // 5. Send the prompt to gemini for text generation 
+            $aiResponse = $this->geminiService->generateText($prompt);
 
-        } catch (\Throwable $th) {
-            //throw $th;
+            if (!$aiResponse) {
+                return response()->json(['answer' => 'I am currently unable to generate a response. Please try again later'], 500);
+            }
+
+            return response()->json(['answer' => $aiResponse]);
+        } catch (\Exception $e) {
+            return response()->json(['answer' => 'An unexpected error occurred. Plz try again'], 500);
         }
     }
 }

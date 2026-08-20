@@ -189,7 +189,7 @@
     </div>
 
     <script>
-        const CHATBOT_API_BASE_URL = 'http://127.0.0.1:8000/ibm';
+        const CHATBOT_API_BASE_URL = 'http://127.0.0.1:8000/api';
         const CHATBOT_ID = 4;
 
         const chatbotContainer = document.getElementById('saas-chatbot-widget');
@@ -304,7 +304,7 @@
             chatbotContainer.style.opacity = '1';
             chatbotContainer.style.visibility = 'visible';
         }, 500);
-        
+
     </script>
 
 </body>
