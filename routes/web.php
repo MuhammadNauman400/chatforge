@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ChatbotController;
 use App\Http\Controllers\Admin\KnowledgeDocumentController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\CompanySettingController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUser;
@@ -30,6 +31,11 @@ Route::middleware(['auth', IsUser::class])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/billing/upgrade', 'BillingUpgrade')->name('billing.upgrade');
        
+    });
+
+    /// Company Settings routes
+    Route::controller(CompanySettingController::class)->group(function () {
+        Route::get('/company/setting', 'CompanySetting')->name('company.setting');
     });
 
 });
