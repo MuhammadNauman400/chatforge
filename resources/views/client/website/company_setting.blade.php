@@ -106,7 +106,11 @@
                                 <label for="chatbot_embed_code" class="form-label">Select Chatbot For Public Page</label>
                                 <select class="form-control" name="chatbot_embed_code" id="chatbot_embed_code">
                                     <option value="">-- No Chatbot --</option>
-                                    <option value="">chatbot</option>
+                                    @foreach ($company->chatbots as $chatbotOption)
+                                        <option value="{{ $chatbotOption->id }}"
+                                            @if ($company->getChatbotIdFromEmbedCode() == $chatbotOption->id) selected @endif>{{ $chatbotOption->name }}
+                                            (ID: {{ $chatbotOption->id }}) </option>
+                                    @endforeach
                                 </select>
                                 <small>Choose which chatbot will apper on your public company website</small>
                             </div>
