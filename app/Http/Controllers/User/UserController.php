@@ -112,4 +112,8 @@ class UserController extends Controller
         return view('client.backend.plans.upgrade', compact('plans'));
     }
 
+    public function Microsoft() {
+        return view('microsoft.chatbot_test');
+    }
+
 }

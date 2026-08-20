@@ -92,6 +92,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/microsoft', [UserController::class, 'Microsoft'])->name('microsoft.page');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
