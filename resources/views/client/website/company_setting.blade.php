@@ -13,7 +13,8 @@
                             <div class="alert alert-danger">{{ session('error') }}</div>
                         @endif
 
-                        <form action="">
+                        <form action="{{ route('company.setting.update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Company Name </label>
@@ -112,7 +113,7 @@
                                             (ID: {{ $chatbotOption->id }}) </option>
                                     @endforeach
                                 </select>
-                                <small>Choose which chatbot will apper on your public company website</small>
+                                <small>Choose which chatbot will appear on your public company website</small>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Save Settings</button>

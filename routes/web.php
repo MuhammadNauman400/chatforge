@@ -36,6 +36,7 @@ Route::middleware(['auth', IsUser::class])->group(function () {
     /// Company Settings routes
     Route::controller(CompanySettingController::class)->group(function () {
         Route::get('/company/setting', 'CompanySetting')->name('company.setting');
+        Route::post('/company/setting/update','CompanySettingUpdate')->name('company.setting.update'); 
     });
 
 });
