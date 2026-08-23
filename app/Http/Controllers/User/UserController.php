@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -114,6 +115,16 @@ class UserController extends Controller
 
     public function Microsoft() {
         return view('microsoft.chatbot_test');
+    }
+
+     public function CompanyShow(string $slug){
+        $company = Company::where('slug',$slug)->first();
+
+        if (!$company) {
+           abort(404, 'Company not found or inactive');
+        }
+
+        return view('company.company_page',compact('company'));
     }
 
 }

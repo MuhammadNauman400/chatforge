@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/company/{slug}', [UserController::class, 'CompanyShow'])->name('company.page.show');
+
+
 /////// User Accessable Routes
 Route::middleware(['auth', IsUser::class])->group(function () {
     Route::get('/dashboard', function () {
@@ -35,7 +38,7 @@ Route::middleware(['auth', IsUser::class])->group(function () {
 
     /// Company Settings routes
     Route::controller(CompanySettingController::class)->group(function () {
-        Route::get('/company/setting', 'CompanySetting')->name('company.setting');
+        Route::get('/company/setting/page', 'CompanySettingPage')->name('company.setting.page');
         Route::post('/company/setting/update','CompanySettingUpdate')->name('company.setting.update'); 
     });
 

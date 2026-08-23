@@ -11,7 +11,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class CompanySettingController extends Controller
 {
-    public function CompanySetting()
+    public function CompanySettingPage()
     {
         $user = Auth::user();
         $company = $user->company;
