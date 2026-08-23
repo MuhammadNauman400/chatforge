@@ -43,7 +43,7 @@ class CompanySettingController extends Controller
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             $img = $manager->read($image);
-            $img->resize(867, 1000)->save(public_path('upload/slider/' . $name_gen));
+            $img->resize(1920,712)->save(public_path('upload/slider/' . $name_gen));
             $save_url = 'upload/slider/' . $name_gen;
 
             if (file_exists(public_path($company->company_logo))) {
