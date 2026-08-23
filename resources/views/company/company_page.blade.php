@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/style.min.css')}}">
 
-    <link href="{{asset('css/chatbot-widget.css')}}">
+    <link href="{{asset('css/chatbot-widget.css')}}" rel="stylesheet">
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbarCollapse">
