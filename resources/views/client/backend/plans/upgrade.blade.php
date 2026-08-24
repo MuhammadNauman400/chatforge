@@ -61,7 +61,7 @@
                                     @if ($plan->name === Auth::user()->plan->name)
                                         <button class="btn btn-secondary fw-semibold w-100" disabled>Current Plan</button>
                                     @else
-                                        <a href="#!"
+                                        <a href="{{route('plans.subscribe', $plan->id)}}"
                                             class="btn {{ $plan->name === 'Pro' ? 'btn-danger' : 'btn-primary' }} fw-semibold w-100">Buy
                                             Now</a>
                                     @endif

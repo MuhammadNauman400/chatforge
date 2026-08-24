@@ -42,6 +42,11 @@ Route::middleware(['auth', IsUser::class])->group(function () {
         Route::post('/company/setting/update','CompanySettingUpdate')->name('company.setting.update'); 
     });
 
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/plans/subscribe/{planId}', 'SubscribePlan')->name('plans.subscribe');
+    
+    });
+
 });
 
 

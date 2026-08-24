@@ -127,4 +127,8 @@ class UserController extends Controller
         return view('company.company_page',compact('company'));
     }
 
+    public function SubscribePlan (Request $request, $planId) {
+
+    }
+
 }
