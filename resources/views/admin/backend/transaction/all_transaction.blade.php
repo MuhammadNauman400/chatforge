@@ -45,7 +45,8 @@
 
                                         <td class="pe-3">
                                             <div class="hstack gap-1 justify-content-end">
-                                                <form action="">
+                                                <form action="{{ route('update.transaction', $item->id) }}" method="POST">
+                                                    @csrf
 
                                                     <select name="status" class="form-control form-control-sm">
                                                         <option value="" disabled

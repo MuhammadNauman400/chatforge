@@ -76,6 +76,7 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     /// All orders
     Route::controller(PlanController::class)->group(function () {
         Route::get('/all/orders', 'AllOrders')->name('all.orders');
+        Route::post('/update/transaction/{id}','UpdateTransaction')->name('update.transaction');  
     });
 
 });
