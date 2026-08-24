@@ -47,6 +47,7 @@ Route::middleware(['auth', IsUser::class])->group(function () {
         Route::get('/plans/subscribe/{planId}', 'SubscribePlan')->name('plans.subscribe');
 
         Route::get('/plans/payment/{transactionId}','ShowPaymentForm')->name('plans.payment');
+         Route::post('/plans/payment/{transactionId}','ProcessPayment')->name('plans.processPayment');
     
     });
 
