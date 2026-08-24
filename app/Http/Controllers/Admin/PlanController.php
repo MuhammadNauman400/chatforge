@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class PlanController extends Controller
@@ -71,6 +72,12 @@ class PlanController extends Controller
         );
 
         return redirect()->back()->with($notification);
+
+    }
+
+    public function AllOrders(){
+        $orders = Transaction::with(['user','plan'])->get();
+        return view('admin.backend.transaction.all_transaction',compact('orders'));
 
     }
 }

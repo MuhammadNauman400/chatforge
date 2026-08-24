@@ -33,24 +33,21 @@ Route::middleware(['auth', IsUser::class])->group(function () {
     /// Billing Upgrade Routes
     Route::controller(UserController::class)->group(function () {
         Route::get('/billing/upgrade', 'BillingUpgrade')->name('billing.upgrade');
-       
     });
 
     /// Company Settings routes
     Route::controller(CompanySettingController::class)->group(function () {
         Route::get('/company/setting/page', 'CompanySettingPage')->name('company.setting.page');
-        Route::post('/company/setting/update','CompanySettingUpdate')->name('company.setting.update'); 
+        Route::post('/company/setting/update', 'CompanySettingUpdate')->name('company.setting.update');
     });
 
     /// Subscribe Plan and payment Routes
     Route::controller(UserController::class)->group(function () {
         Route::get('/plans/subscribe/{planId}', 'SubscribePlan')->name('plans.subscribe');
 
-        Route::get('/plans/payment/{transactionId}','ShowPaymentForm')->name('plans.payment');
-         Route::post('/plans/payment/{transactionId}','ProcessPayment')->name('plans.processPayment');
-    
+        Route::get('/plans/payment/{transactionId}', 'ShowPaymentForm')->name('plans.payment');
+        Route::post('/plans/payment/{transactionId}', 'ProcessPayment')->name('plans.processPayment');
     });
-
 });
 
 
@@ -76,6 +73,10 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
         Route::get('/delete/plans{id}', 'DeletePlans')->name('delete.plans');
     });
 
+    /// All orders
+    Route::controller(PlanController::class)->group(function () {
+        Route::get('/all/orders', 'AllOrders')->name('all.orders');
+    });
 
 });
 /////// End Admin Routes
@@ -101,7 +102,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/chatbots', [ChatbotController::class, 'Index']);
     Route::post('/chatbots', [ChatbotController::class, 'Store']);
-    Route::delete('/chatbots/{chatbot}', [ChatbotController::class, 'DeleteChatbot']); 
+    Route::delete('/chatbots/{chatbot}', [ChatbotController::class, 'DeleteChatbot']);
 
 
     Route::get('/chatbot/page', [ChatbotController::class, 'ChatbotPage'])->name('chatbot.page');
