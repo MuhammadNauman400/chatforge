@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Plan;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -128,7 +129,42 @@ class UserController extends Controller
     }
 
     public function SubscribePlan (Request $request, $planId) {
+        $plan = Plan::findOrFail($planId);
+        $user = Auth::user();
 
+        if ($user->plan->name === $plan->name) {
+
+          $notification = array(
+            'message' => 'You are already on this plan',
+            'alert-type' => 'error'
+        ); 
+           return redirect()->back()->with($notification); 
+        }
+
+
+        $transaction = Transaction::create([
+            'user_id' => $user->id,
+            'plan_id' => $plan->id,
+            'transaction_id' => 'PENDING_' . time(),
+            'amount' => $plan->price,
+            'status' => 'pending',
+            'created_at' => now(),
+            'updated_at' => now(),
+
+        ]);
+
+         $notification = array(
+            'message' => 'Please provide your bank transfer details to complete the upgrade',
+            'alert-type' => 'warning'
+        ); 
+           return redirect()->route('plans.payment',$transaction->id)->with($notification);
     }
+
+    public function ShowPaymentForm($transactionId){
+
+        $transaction = Transaction::findOrFail($transactionId);
+        return view('client.backend.plans.payment',compact('transaction'));
+
+     }
 
 }

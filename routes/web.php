@@ -42,8 +42,11 @@ Route::middleware(['auth', IsUser::class])->group(function () {
         Route::post('/company/setting/update','CompanySettingUpdate')->name('company.setting.update'); 
     });
 
+    /// Subscribe Plan and payment Routes
     Route::controller(UserController::class)->group(function () {
         Route::get('/plans/subscribe/{planId}', 'SubscribePlan')->name('plans.subscribe');
+
+        Route::get('/plans/payment/{transactionId}','ShowPaymentForm')->name('plans.payment');
     
     });
 
