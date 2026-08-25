@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\GenerateBlogPostJob;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,8 @@ class BlogController extends Controller
             'title' => $request->title,
             'status' => 'pending',
         ]);
+
+        GenerateBlogPostJob::dispatch($blog);
 
         $notification = array(
             'message' => 'Blog post generate Successfully It may takes little time',
