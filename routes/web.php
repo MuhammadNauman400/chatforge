@@ -86,6 +86,7 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
         Route::get('/admin/blogs/create','AdminBlogsCreate')->name('admin.blogs.create');
         Route::post('/admin/blogs/store','AdminBlogsStore')->name('admin.blogs.store');
         Route::get('/admin/blogs/show/{blog}','AdminBlogsShow')->name('admin.blogs.show');
+        Route::get('/admin/blogs/delete/{id}','AdminBlogsDelete')->name('admin.blogs.delete');
     });
 
 });
