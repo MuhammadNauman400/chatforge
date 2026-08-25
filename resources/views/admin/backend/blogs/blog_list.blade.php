@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-item-center">
                         Ai Generated Blog Posts
-                        <a href="" class="btn btn-primary btn-sm">Generate New Blog</a>
+                        <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary btn-sm">Generate New Blog</a> 
                     </div>
 
                     <div class="card-body">
