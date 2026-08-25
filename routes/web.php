@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ChatbotController;
 use App\Http\Controllers\Admin\KnowledgeDocumentController;
 use App\Http\Controllers\Admin\PlanController;
@@ -76,7 +77,12 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     /// All orders
     Route::controller(PlanController::class)->group(function () {
         Route::get('/all/orders', 'AllOrders')->name('all.orders');
-        Route::post('/update/transaction/{id}','UpdateTransaction')->name('update.transaction');  
+        Route::post('/update/transaction/{id}', 'UpdateTransaction')->name('update.transaction');
+    });
+
+    /// Blog Routes
+    Route::controller(BlogController::class)->group(function () {
+        Route::get('/blogs', 'BlogList')->name('blog.list');
     });
 
 });
