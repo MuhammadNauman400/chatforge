@@ -46,7 +46,7 @@
                                         </div>
 
                                         <div class="ms-auto d-flex flex-column align-items-end">
-                                            <a href="" class="btn btn-info btn-sm mb-2">View</a>
+                                            <a href="{{ route('admin.blogs.show',$blog) }}" class="btn btn-info btn-sm mb-2">View</a>
                                             <form action="">
                                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                             </form>

@@ -40,4 +40,9 @@ class BlogController extends Controller
         );
         return redirect()->route('blog.list')->with($notification);
     }
+
+    public function AdminBlogsShow(Blog $blog)
+    {
+        return view('admin.backend.blogs.blog_show', compact('blog'));
+    }
 }
