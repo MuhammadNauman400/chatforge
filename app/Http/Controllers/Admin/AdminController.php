@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\Chatbot;
+use App\Models\Company;
+use App\Models\KnowledgeDocument;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +14,29 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function AdminDashboard() {
-        return view('admin.index');
+    public function AdminDashboard()
+    {
+        $totalCompanies = Company::count();
+        $totalChatbots = Chatbot::count();
+        $totalDocuments = KnowledgeDocument::count();
+        $totalBlogs = Blog::count();
+
+        $recentBlogs = \App\Models\Blog::latest()
+            ->take(5)
+            ->get();
+
+        $recentDocuments = \App\Models\KnowledgeDocument::latest()
+            ->take(5)
+            ->get();
+
+        return view('admin.index', compact(
+            'totalCompanies',
+            'totalChatbots',
+            'totalDocuments',
+            'totalBlogs',
+            'recentBlogs',
+            'recentDocuments'
+        ));
     }
 
     public function AdminLogout(Request $request)
@@ -25,16 +50,18 @@ class AdminController extends Controller
         return redirect('/login');
     }
 
-    public function AdminProfile() {
+    public function AdminProfile()
+    {
         $id = Auth::user()->id;     //get authenticated or loginned user id
         $profileData = User::find($id);
 
         return view('admin.admin_profile', compact('profileData'));
     }
 
-    public function AdminProfileStore(Request $request) {
+    public function AdminProfileStore(Request $request)
+    {
 
-        $id = Auth::user()->id;    
+        $id = Auth::user()->id;
         $data = User::find($id);
 
         $data->name = $request->name;
@@ -46,7 +73,7 @@ class AdminController extends Controller
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $filename = time().'.'.$file->getClientOriginalExtension();
+            $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/admin_images'), $filename);
             $data->photo = $filename;
 
@@ -66,19 +93,22 @@ class AdminController extends Controller
     }
 
     //deleteOldimage function
-    private function deleteOldImage(string $oldPhotoPath): void {
-        $fullPath = public_path('upload/admin_images/'.$oldPhotoPath);
+    private function deleteOldImage(string $oldPhotoPath): void
+    {
+        $fullPath = public_path('upload/admin_images/' . $oldPhotoPath);
 
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
     }
 
-    public function AdminChangePassword() {
+    public function AdminChangePassword()
+    {
         return view('admin.change_password');
     }
 
-    public function AdminPasswordUpdate(Request $request) {
+    public function AdminPasswordUpdate(Request $request)
+    {
         $user = Auth::user();
 
         $request->validate([
@@ -88,11 +118,11 @@ class AdminController extends Controller
 
         if (!Hash::check($request->old_password, $user->password)) {
             $notification = array(
-            'message' => 'Your old password does not match',
-            'alert-type' => 'error'
-        );
+                'message' => 'Your old password does not match',
+                'alert-type' => 'error'
+            );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
         }
 
         User::whereId($user->id)->update([
@@ -107,6 +137,5 @@ class AdminController extends Controller
         );
 
         return redirect()->route('login')->with($notification);
-
     }
 }

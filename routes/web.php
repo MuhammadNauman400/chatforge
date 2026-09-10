@@ -21,9 +21,9 @@ Route::get('/company/{slug}', [UserController::class, 'CompanyShow'])->name('com
 
 /////// User Accessable Routes
 Route::middleware(['auth', IsUser::class])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('client.index');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'UserDashboard'])
+        ->middleware('verified')
+        ->name('dashboard');
 
     Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
     Route::get('/user/profile', [UserController::class, 'UserProfile'])->name('user.profile');
@@ -83,12 +83,11 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     /// Blog Routes
     Route::controller(BlogController::class)->group(function () {
         Route::get('/blogs', 'BlogList')->name('blog.list');
-        Route::get('/admin/blogs/create','AdminBlogsCreate')->name('admin.blogs.create');
-        Route::post('/admin/blogs/store','AdminBlogsStore')->name('admin.blogs.store');
-        Route::get('/admin/blogs/show/{blog}','AdminBlogsShow')->name('admin.blogs.show');
-        Route::get('/admin/blogs/delete/{id}','AdminBlogsDelete')->name('admin.blogs.delete');
+        Route::get('/admin/blogs/create', 'AdminBlogsCreate')->name('admin.blogs.create');
+        Route::post('/admin/blogs/store', 'AdminBlogsStore')->name('admin.blogs.store');
+        Route::get('/admin/blogs/show/{blog}', 'AdminBlogsShow')->name('admin.blogs.show');
+        Route::get('/admin/blogs/delete/{id}', 'AdminBlogsDelete')->name('admin.blogs.delete');
     });
-
 });
 /////// End Admin Routes
 

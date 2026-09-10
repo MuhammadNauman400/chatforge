@@ -13,6 +13,38 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function UserDashboard()
+    {
+        $user = Auth::user();
+
+        $company = $user->company;
+        $plan = $user->plan;
+
+        $totalChatbots = $company ? $company->chatbots()->count() : 0;
+
+        $totalDocuments = $company
+            ? $company->knowledgeDocuments()->count()
+            : 0;
+
+        $recentChatbots = $company
+            ? $company->chatbots()->latest()->take(5)->get()
+            : collect();
+
+        $recentDocuments = $company
+            ? $company->knowledgeDocuments()->latest()->take(5)->get()
+            : collect();
+
+        return view('client.index', compact(
+            'user',
+            'company',
+            'plan',
+            'totalChatbots',
+            'totalDocuments',
+            'recentChatbots',
+            'recentDocuments'
+        ));
+    }
+    
     public function UserLogout(Request $request)
     {
         Auth::guard('web')->logout();
@@ -24,16 +56,18 @@ class UserController extends Controller
         return redirect('/login');
     }
 
-    public function UserProfile() {
+    public function UserProfile()
+    {
         $id = Auth::user()->id;     //get authenticated or loginned user id
         $profileData = User::find($id);
 
         return view('client.client_profile', compact('profileData'));
     }
 
-    public function UserProfileStore(Request $request) {
+    public function UserProfileStore(Request $request)
+    {
 
-        $id = Auth::user()->id;    
+        $id = Auth::user()->id;
         $data = User::find($id);
 
         $data->name = $request->name;
@@ -45,7 +79,7 @@ class UserController extends Controller
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $filename = time().'.'.$file->getClientOriginalExtension();
+            $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/admin_images'), $filename);
             $data->photo = $filename;
 
@@ -65,19 +99,22 @@ class UserController extends Controller
     }
 
     //deleteOldimage function
-    private function deleteOldImage(string $oldPhotoPath): void {
-        $fullPath = public_path('upload/admin_images/'.$oldPhotoPath);
+    private function deleteOldImage(string $oldPhotoPath): void
+    {
+        $fullPath = public_path('upload/admin_images/' . $oldPhotoPath);
 
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
     }
 
-    public function UserChangePassword() {
+    public function UserChangePassword()
+    {
         return view('client.client_change_password');
     }
 
-    public function UserPasswordUpdate(Request $request) {
+    public function UserPasswordUpdate(Request $request)
+    {
         $user = Auth::user();
 
         $request->validate([
@@ -87,11 +124,11 @@ class UserController extends Controller
 
         if (!Hash::check($request->old_password, $user->password)) {
             $notification = array(
-            'message' => 'Your old password does not match',
-            'alert-type' => 'error'
-        );
+                'message' => 'Your old password does not match',
+                'alert-type' => 'error'
+            );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
         }
 
         User::whereId($user->id)->update([
@@ -106,39 +143,42 @@ class UserController extends Controller
         );
 
         return redirect()->route('login')->with($notification);
-
     }
 
-    public function BillingUpgrade() {
+    public function BillingUpgrade()
+    {
         $plans = Plan::all();
         return view('client.backend.plans.upgrade', compact('plans'));
     }
 
-    public function Microsoft() {
+    public function Microsoft()
+    {
         return view('microsoft.chatbot_test');
     }
 
-     public function CompanyShow(string $slug){
-        $company = Company::where('slug',$slug)->first();
+    public function CompanyShow(string $slug)
+    {
+        $company = Company::where('slug', $slug)->first();
 
         if (!$company) {
-           abort(404, 'Company not found or inactive');
+            abort(404, 'Company not found or inactive');
         }
 
-        return view('company.company_page',compact('company'));
+        return view('company.company_page', compact('company'));
     }
 
-    public function SubscribePlan (Request $request, $planId) {
+    public function SubscribePlan(Request $request, $planId)
+    {
         $plan = Plan::findOrFail($planId);
         $user = Auth::user();
 
         if ($user->plan->name === $plan->name) {
 
-          $notification = array(
-            'message' => 'You are already on this plan',
-            'alert-type' => 'error'
-        ); 
-           return redirect()->back()->with($notification); 
+            $notification = array(
+                'message' => 'You are already on this plan',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
         }
 
 
@@ -153,21 +193,22 @@ class UserController extends Controller
 
         ]);
 
-         $notification = array(
+        $notification = array(
             'message' => 'Please provide your bank transfer details to complete the upgrade',
             'alert-type' => 'warning'
-        ); 
-           return redirect()->route('plans.payment',$transaction->id)->with($notification);
+        );
+        return redirect()->route('plans.payment', $transaction->id)->with($notification);
     }
 
-    public function ShowPaymentForm($transactionId){
+    public function ShowPaymentForm($transactionId)
+    {
 
         $transaction = Transaction::findOrFail($transactionId);
-        return view('client.backend.plans.payment',compact('transaction'));
+        return view('client.backend.plans.payment', compact('transaction'));
+    }
 
-     }
-
-     public function ProcessPayment(Request $request, $transactionId){
+    public function ProcessPayment(Request $request, $transactionId)
+    {
 
         $request->validate([
             'user_transaction_id' => 'required|string'
@@ -183,9 +224,7 @@ class UserController extends Controller
         $notification = array(
             'message' => 'Your Payment details have been submitted. Please wait for admin verification',
             'alert-type' => 'warning'
-        ); 
-           return redirect()->route('billing.upgrade')->with($notification); 
-
-     }
-
+        );
+        return redirect()->route('billing.upgrade')->with($notification);
+    }
 }
