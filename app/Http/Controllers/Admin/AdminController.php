@@ -7,6 +7,8 @@ use App\Models\Blog;
 use App\Models\Chatbot;
 use App\Models\Company;
 use App\Models\KnowledgeDocument;
+use App\Models\Plan;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,24 +20,31 @@ class AdminController extends Controller
     {
         $totalCompanies = Company::count();
         $totalChatbots = Chatbot::count();
-        $totalDocuments = KnowledgeDocument::count();
+        $totalPlans = Plan::count();
+        $totalOrders = Transaction::count();
         $totalBlogs = Blog::count();
 
-        $recentBlogs = \App\Models\Blog::latest()
+        $recentChatbots = Chatbot::latest()
             ->take(5)
             ->get();
 
-        $recentDocuments = \App\Models\KnowledgeDocument::latest()
+        $recentOrders = Transaction::latest()
+            ->take(5)
+            ->get();
+
+        $recentBlogs = Blog::latest()
             ->take(5)
             ->get();
 
         return view('admin.index', compact(
             'totalCompanies',
             'totalChatbots',
-            'totalDocuments',
+            'totalPlans',
+            'totalOrders',
             'totalBlogs',
-            'recentBlogs',
-            'recentDocuments'
+            'recentChatbots',
+            'recentOrders',
+            'recentBlogs'
         ));
     }
 
