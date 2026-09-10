@@ -69,12 +69,12 @@
                 </a>
             </li>
 
-            <li class="side-nav-item">
+            {{-- <li class="side-nav-item">
                 <a href="{{ route('all.plans') }}" class="side-nav-link">
                     <span class="menu-icon"><i class="ti ti-message"></i></span>
                     <span class="menu-text"> Plans </span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="side-nav-item">
                 <a href="{{ route('user.knowledge.page') }}" class="side-nav-link">

@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="knowledgeDocumentIds" class="form-label">Knowledge Documents (Optional)</label>
+                            <label for="knowledgeDocumentIds" class="form-label">Knowledge Documents</label>
                             <select class="form-control" name="knowledge_document_ids[]" id="knowledgeDocumentIds"
                                 multiple></select>
                         </div>
