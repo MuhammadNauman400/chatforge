@@ -1,7 +1,7 @@
 @extends('client.client_dashboard')
 
 @section('client')
-    ```
+
     <div class="page-container">
 
         {{-- Page Heading --}}

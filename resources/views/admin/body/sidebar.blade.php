@@ -74,67 +74,15 @@
                 </a>
             </li>
 
-            
-
-            <li class="side-nav-title mt-2">
-                Custom
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages"
-                    class="side-nav-link">
-                    <span class="menu-icon"><i class="ti ti-package"></i></span>
-                    <span class="menu-text"> Pages </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarPages">
-                    <ul class="sub-menu">
-                        <li class="side-nav-item">
-                            <a href="pages-starter.html" class="side-nav-link">
-                                <span class="menu-text">Starter Page</span>
-                            </a>
-                        </li>
-                        <li class="side-nav-item">
-                            <a href="pages-pricing.html" class="side-nav-link">
-                                <span class="menu-text">Pricing</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarPagesAuth" aria-expanded="false"
-                    aria-controls="sidebarPagesAuth" class="side-nav-link">
-                    <span class="menu-icon"><i class="ti ti-user-shield"></i></span>
-                    <span class="menu-text"> Authentication </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarPagesAuth">
-                    <ul class="sub-menu">
-                        <li class="side-nav-item">
-                            <a href="auth-login.html" class="side-nav-link">
-                                <span class="menu-text">Login</span>
-                            </a>
-                        </li>
-                        <li class="side-nav-item">
-                            <a href="auth-register.html" class="side-nav-link">
-                                <span class="menu-text">Register</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
         </ul>
 
         <!-- Help Box -->
         <div class="help-box text-center">
-            <h5 class="fw-semibold fs-16">Unlimited Access</h5>
+            {{-- <h5 class="fw-semibold fs-16">Unlimited Access</h5>
             <p class="mb-3 text-muted">Upgrade to plan to get access to unlimited reports</p>
-            <a href="javascript: void(0);" class="btn btn-danger btn-sm">Upgrade</a>
+            <a href="javascript: void(0);" class="btn btn-danger btn-sm">Upgrade</a> --}}
+            <p class="mb-3 text-muted">Unlimited Chatbot Access</p>
+
         </div>
 
         <div class="clearfix"></div>

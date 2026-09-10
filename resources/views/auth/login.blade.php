@@ -31,10 +31,10 @@
     <div class="auth-bg d-flex min-vh-100">
         <div class="row g-0 justify-content-center w-100 m-xxl-5 px-xxl-4 m-3">
             <div class="col-xxl-6 col-lg-5 col-md-6">
-                <a href="index.html" class="auth-brand d-flex justify-content-center mb-2">
-                    <img src="{{ asset('backend/assets/images/logo-dark.') }}png" alt="dark logo" height="26"
+                <a class="auth-brand d-flex justify-content-center mb-2">
+                    <img src="{{ asset('backend/assets/images/logo-dark.') }}png" alt="dark logo" height="40"
                         class="logo-dark">
-                    <img src="{{ asset('backend/assets/images/logo.png') }}" alt="logo light" height="26"
+                    <img src="{{ asset('backend/assets/images/logo.png') }}" alt="logo light" height="40"
                         class="logo-light">
                 </a>
 

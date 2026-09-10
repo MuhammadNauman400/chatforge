@@ -8,8 +8,8 @@ File: App Css File
 */
 @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap");
 :root {
-  --ct-logo-lg-height: 22px;
-  --ct-logo-sm-height: 28px;
+  --ct-logo-lg-height: 34px;
+  --ct-logo-sm-height: 34px;
   --ct-sidenav-width: 245px;
   --ct-sidenav-width-md: 160px;
   --ct-sidenav-width-sm: 80px;
