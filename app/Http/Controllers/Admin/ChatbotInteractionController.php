@@ -81,7 +81,7 @@ class ChatbotInteractionController extends Controller
                 "Question: " . $userQuery;
 
             if (!empty($chatbot->persona)) {
-                $prompt = "You are a helpful chatbot with the following persona: '{$chatbot->persona}'. " . $prompt;
+                $prompt = "You are a helpful chatbot with the following persona: '{$chatbot->perosona}'. " . $prompt;
             }
 
             // 5. Send the prompt to gemini for text generation 
